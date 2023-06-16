@@ -18,7 +18,8 @@ export const Button = styled.button`
   font-weight: 600;
   padding: 6px 16px;
 
-  &:hover {
+  &:hover,
+  &:disabled {
     background-color: #ad1d35;
   }
 
