@@ -1,36 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/operations';
 import { Item, Button } from './Contact.styled';
 import PropTypes from 'prop-types';
-import { getIsLoading } from 'redux/selectors';
 import { useState } from 'react';
+import { Notify } from 'notiflix';
 
 const Contact = ({ contact: { name, phone, id } }) => {
-  const [deleteId, setDeleteId] = useState(null);
-  const [canDelete, setCanDelete] = useState(false);
-
+  const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useDispatch();
-  const handleDelete = () => dispatch(deleteContact(id));
-  const isLoading = useSelector(getIsLoading);
-
-  console.log(isLoading);
-
-  if (id === deleteId) {
-  }
+  const handleDelete = () => {
+    Notify.success('Сontact was successfully deleted');
+    setIsDeleting(true);
+    dispatch(deleteContact(id)).finaly(() => {
+      setIsDeleting(false);
+    });
+  };
 
   return (
     <>
       <Item>{name}:</Item>
       <Item> {phone}</Item>
-      <Button
-        type="button"
-        onClick={() => {
-          dispatch(deleteContact(id));
-          setDeleteId(id);
-        }}
-        disabled={isLoading}
-      >
-        {isLoading && canDelete ? 'Deleting...' : 'Delete'}
+      <Button type="button" onClick={handleDelete} disabled={isDeleting}>
+        {isDeleting ? 'Deleting...' : 'Delete'}
       </Button>
     </>
   );

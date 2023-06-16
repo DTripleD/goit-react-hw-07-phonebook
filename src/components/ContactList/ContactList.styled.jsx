@@ -14,3 +14,20 @@ export const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
 `;
+
+export const ErrorTitle = styled.h3`
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
+
+export const ErrorText = styled.p`
+  margin: 0;
+  font-size: 30px;
+  color: #8b8b8bdd;
+`;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

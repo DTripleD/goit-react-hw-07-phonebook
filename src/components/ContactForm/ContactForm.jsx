@@ -3,6 +3,7 @@ import { FormWrapper, Form, AddContact, Button } from './ContactForm.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
+import { Notify } from 'notiflix';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -18,10 +19,11 @@ const ContactForm = () => {
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     if (isContactExist) {
-      alert(` ${name} is already in contacts`);
+      Notify.failure(` ${name} is already in contacts`);
       return;
     }
     dispatch(addContact({ name, phone }));
+    Notify.success('Contact was added successfully');
     setName('');
     setPhone('');
   };
