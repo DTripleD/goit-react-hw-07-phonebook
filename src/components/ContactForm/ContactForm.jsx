@@ -18,14 +18,18 @@ const ContactForm = () => {
     const isContactExist = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
-    if (isContactExist) {
-      Notify.failure(` ${name} is already in contacts`);
-      return;
-    }
-    dispatch(addContact({ name, phone }));
-    Notify.success('Contact was added successfully');
-    setName('');
-    setPhone('');
+
+    dispatch(addContact({ name, phone }))
+      .unwrap()
+      .then(payload => {
+        if (isContactExist) {
+          Notify.failure(` ${payload.name} is already in contacts`);
+        } else {
+          Notify.success(`Contact ${payload.name} was added successfully`);
+          setName('');
+          setPhone('');
+        }
+      });
   };
 
   return (

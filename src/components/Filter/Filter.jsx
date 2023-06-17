@@ -6,12 +6,8 @@ import { getFilter } from '../../redux/selectors';
 const Filter = () => {
   const dispatch = useDispatch();
 
-  const onSetFilter = payload => {
-    dispatch(setFilter(payload));
-  };
-
   const updateFilter = event => {
-    onSetFilter(event.target.value);
+    dispatch(setFilter(event.target.value));
   };
 
   const filter = useSelector(getFilter);

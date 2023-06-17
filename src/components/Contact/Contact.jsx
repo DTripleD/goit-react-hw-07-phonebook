@@ -9,11 +9,15 @@ const Contact = ({ contact: { name, phone, id } }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
-    Notify.success('Сontact was successfully deleted');
     setIsDeleting(true);
-    dispatch(deleteContact(id)).finaly(() => {
-      setIsDeleting(false);
-    });
+    dispatch(deleteContact(id))
+      .unwrap()
+      .then(
+        payload =>
+          Notify.success(`Сontact ${payload.name} was successfully deleted`)
+        // setIsDeleting(false);
+        // Нам не треба скидувати локальний стан на базовий, адже компонент розмонтовується
+      );
   };
 
   return (

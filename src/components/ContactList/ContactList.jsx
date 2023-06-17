@@ -12,7 +12,6 @@ import Contact from 'components/Contact/Contact';
 const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
   const isError = useSelector(getError);
 
   const getFilteredContact = (contacts, filter) => {
