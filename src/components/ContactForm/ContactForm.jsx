@@ -19,17 +19,16 @@ const ContactForm = () => {
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
-    dispatch(addContact({ name, phone }))
-      .unwrap()
-      .then(payload => {
-        if (isContactExist) {
-          Notify.failure(` ${payload.name} is already in contacts`);
-        } else {
-          Notify.success(`Contact ${payload.name} was added successfully`);
-          setName('');
-          setPhone('');
-        }
-      });
+    if (isContactExist) {
+      Notify.failure(`${name} is already in contacts`);
+      return;
+    }
+
+    dispatch(addContact({ name, phone })).then(() => {
+      Notify.success(`Contact ${name} was added successfully`);
+      setName('');
+      setPhone('');
+    });
   };
 
   return (
